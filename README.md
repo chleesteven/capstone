@@ -14,29 +14,57 @@ Sentiment analysis merely attempts to see if a review is positive or negative.  
 
 ### Executive Summary
 
-In order for the website to stay ahead of the pack and be the number one online sports hub, it needs to keep abreast with the sports fans and subscribers and stay informed on the latest trending news and updates in the sports world.  Extracting such information from social media sites, forums and communities is essential for any company that wants to stay ahead of the competition.  Unfortunately, many firms lacked efficient support systems to fulfill this requirement.  Your company has been paying a high price trying to fill this gap with less efficient methods, which to be honest, is not sustainable.
+It seems thus far, that projects undertaken on the Amazon reviews dataset have mostly been about sentiment analysis.  Only recently, few have created recommender systems to recommend similar products to returning customers.  The objective of this undertaking is to try to classify the huge amount of review information, and to see if they lead to valuable insights that might aid business owners.
 
-Fortunately, you have come to your senses and is ready to make changes to improve the situation and increase earnings.  We have the unique solution that you have been seeking to improve operations and processes.  We can help you solve the problem of not being able to deliver the latest information to your creative teams and help them produce quality content for your subscribers faster and keep them for longer.
+Some of the insights I hope to gain through this work include, easily interpreted details, such as, (i) if delays in deliveries were encountered, (ii) if defects or damage in products were found, and so on.  At a deeper level, this project would be considered extremely successful, if for instance, patterns or trends in demand of products can be inferred from the classified or categorized information.
 
-We have the ideal solution for you in the form of a machine learning model.  This model would enable your operations team to automate the data extraction and classifcation process at a much faster pace and accuracy.  Allowing them to deliver the valuable information to where it is most needed, and allow your other departments to collaborate better in working towards your company's goals.
+The approach of this endeavour is as follows:
 
-We are an establish company that has been specializing in what we do over the past decade at helping companies like yours to be in the forefront of the competition.  We deliver solutions that benefit companies and produce significant results.
+1. [Obtain and Preprocess Data](./code/01-obtain-preprocess.ipynb)
+ - Inspect the Data
+ - Identify Needed Data Items
+ - Remove Duplicates
+ - Remove Unwanted Text
+ - Replace Missing Data
+ - Remove Incomplete Records
+ - Tokenize and Lemmatize
+ - Remove Stop Words
+2. [Model and Evaluate](./code/02-topic-modelling-lda.ipynb)
+ - Identify LDA Model
+ - Create Term ID Dictionary
+ - Create Documents Corpus
+ - Determine Number of Topics
+ - Run Model
+ - Run Comparison Model
+ - Compute and Compare Coherence Score
+ - Analyze Results
+ - Plot Visualizations
+ - Examine Topic and Document Keywords
+3. [More Visualizations](03-visualizations.ipynb)
+ - Plot and Analyze
+4. [Transformer Demo](04-transformers-demo.ipynb)
+ - Create Demo
 
 ---
 
 
 ### Conclusions and Recommendations
 
+The results were promising, but further iterations of this work would be required if more meaningful insights are to be gained.  The biggest challenge of this project was the lack of computing power and hardware memory needed to process the huge amount of review data.  Not only did this delay the progress of the project, it also limited the amount of data that could be included in the topic modelling.  Data from over 200 million reviews from Amazon were available.  However, due to processing constraints, I could only work with about one percent of the data.
 
-At the end, the findings and modelling results turned out much better than expected.  Looking at the findings during EDA, it became quite clear that the results would be good.  This was upon the discovery that there were a sufficent number of words that were unique to each forum.  Basketball player names in the NBA forum and football club names in the Premier League forum.  For this reason alone, it would be hard to imagine that the classification models would perform poorly.
+Key factors leading to a good segregation of topics include the following:
 
-One area in which the number of unique words for each forum can be increased would be to improve the tokenization algorithm.  Acronyms and abbreviated words,  especially if hyphenated, can be better handled during tokenization.  When creating regular expressions, I faced difficulty in creating an expression that would allow the tokenizer to tokenize hyphenated words.
+ - Quality of text processing
+ - Variety of topics covered in the text
+ - Choice of modelling algorithm
+ - Number of topics parameter provided to the algorithm
+ - Tunning parameters of the algorithm
 
-Another way that could improve generalisation results, would be to increase the level of the n-grams parameter to the CountVectorizer.  The default is one.  Even after grid search optimization it remained at one.  This was very likely due to the fact that the model was already getting very good results given the dataset.  We could try to make the model more robust by scraping data from forums that are more closely related and less likely to have unique words specific to each forum.
+Of the factors listed above, the lack of variety of topics covered in the available data contributed to the fair results.  Consequently, inferring meaningful insights from the classification results was less helpful that hoped.
 
-The module that could do with the greatest improvement would be the web scraping API calls.  The current method is a very primitive way to get the job done.  There are already better APIs and libraries available without the 1000 record limitation.
+The lack of processing power also prevented the tunning of hyperparameters because the time required to run the models multiple times would be unacceptable in meeting the deadline.
 
-In summary, both models compared produced very good results and would serve the intended purpose very well.  It would be interesting to try to adapt the models to become a multi-class classifier and work with data from more than two forums.
+Utilizing and retraining pretrained models would be explored in future iterations
 
 ---
 
@@ -113,12 +141,42 @@ Technical report submitted and hosted on Github Enterprise. Content structure as
 capstone
 |__ code
 |   |__ 01-obtain-preprocess.ipynb
-|   |__ 02-topic-modelling.ipynb
-|   |__ 03-transformers.ipynb
+|   |__ 02-topic-modelling-lda.ipynb
+|   |__ 03-visualizations.ipynb
+|   |__ 04-transformers-demo.ipynb
 |__ data
 |   |__ Tools_and_Home_Improvement_5.json.gz
 |   |__ meta_Tools_and_Home_Improvement.json.gz
+|   |__ keywords_lda.csv
+|   |__ reviews_clean.csv
+|   |__ reviews_demo.csv
+|   |__ reviews_lda.csv
+|   |__ top3docs.csv
+|   |__ topics_lda.csv
+|__ ldavis
+|   |__ ldavis_bigrams_30
+|   |__ ldavis_bigrams_30.html
 |__ Amazon Review Classification.pdf
 |__ README.md
 
 ```
+
+---
+
+
+### References
+
+[Topic Modeling with Gensim (Python) by Selva Prabhakaran](https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/)
+
+[Topic modeling visualization – How to present the results of LDA models?
+by Selva Prabhakaran](https://www.machinelearningplus.com/nlp/topic-modeling-visualization-how-to-present-results-lda-models/)
+
+[Comparison of Variational Bayes and Gibbs Sampling in Reconstruction of Missing Values with  Probabilistic Principal Component Analysis](https://users.ics.aalto.fi/praiko/papers/step10.pdf)
+
+[Evaluate Topic Models: Latent Dirichlet Allocation (LDA) - A step-by-step guide to building interpretable topic models](https://towardsdatascience.com/evaluate-topic-model-in-python-latent-dirichlet-allocation-lda-7d57484bb5d0)
+
+[T-distributed Stochastic Neighbor Embedding(t-SNE) - Learn the basics of t-SNE, how it is different than PCA and how to apply t- SNE on MNIST dataset](https://towardsdatascience.com/t-distributed-stochastic-neighbor-embedding-t-sne-bb60ff109561)
+
+[How do Transformers Work in NLP? A Guide to the Latest State-of-the-Art Models](https://www.analyticsvidhya.com/blog/2019/06/understanding-transformers-nlp-state-of-the-art-models/)
+
+---
